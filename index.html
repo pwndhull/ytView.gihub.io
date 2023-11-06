@@ -1,0 +1,85 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-player {
+            margin: 10px;
+        }
+
+        .video-player iframe {
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multi-Video Player</h1>
+    <p>Enter the number of video players (0-10) and a YouTube video URL:</p>
+
+    <input type="number" id="playerCount" min="0" max="100" value="0">
+    <input type="text" id="videoUrl" placeholder="Enter YouTube video URL">
+    <button id="playButton">Play</button>
+
+    <div id="container"></div>
+
+    <script>
+        document.getElementById("playButton").addEventListener("click", function () {
+            const playerCount = parseInt(document.getElementById("playerCount").value, 10);
+            const videoUrl = document.getElementById("videoUrl").value;
+
+            if (playerCount >= 0 && playerCount <= 100 && videoUrl) {
+                const container = document.getElementById("container");
+                container.innerHTML = "";
+
+                for (let i = 0; i < playerCount; i++) {
+                    const playerDiv = document.createElement("div");
+                    playerDiv.className = "video-player";
+
+                    const iframe = document.createElement("iframe");
+                    iframe.src = `https://www.youtube.com/embed/${getVideoId(videoUrl)}`;
+                    iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+                    iframe.allowFullscreen = true;
+
+                    playerDiv.appendChild(iframe);
+                    container.appendChild(playerDiv);
+                }
+            } else {
+                alert("Please enter a valid number of players and a YouTube video URL.");
+            }
+        });
+
+        function getVideoId(url) {
+            const regex = /v=([^?&]+)/;
+            const match = url.match(regex);
+            if (match) {
+                return match[1];
+            }
+            return null;
+        }
+    </script>
+
+
+<h1>
+    Dummy Multiview Website
+</h1>
+<h5>Pawan Dhull</h5>
+</body>
+</html>
